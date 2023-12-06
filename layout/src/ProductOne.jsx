@@ -4,8 +4,8 @@ import { Card, CardContent, CardMedia } from '@mui/material';
 import { Button, CardActionArea, CardActions, Toolbar } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-    loadProductDetailsStart,
-} from './redux/actions/productDetailsActions';
+    fetchProductDetails,
+} from './redux/slices/productSlice';
 const ProductOne = () => {
 
     const CustomCard = styled(Card)(({ theme }) => ({
@@ -19,33 +19,19 @@ const ProductOne = () => {
             color: '#000000',
         },
     }));
-    // const [productData, setProductData] = useState();
-
-    // useEffect(() => {
-    //     fetch("https://api.slingacademy.com/v1/sample-data/products?offset=5&limit=15", {
-    //         method: "GET",
-    //     })
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             setProductData(data.products);
-    //             // console.log(data);
-    //         })
-    //         .catch((error) => console.log(error));
-    // }, []);
 
     const dispatch = useDispatch();
-    const productData = useSelector((state) => state.productDetails.data?.products);
+    const {loading, reposList} = useSelector((state) => state.product);
     useEffect(() => {
-        dispatch(loadProductDetailsStart());
+        dispatch(fetchProductDetails());
     }, [])
-    console.log('productData', productData);
 
     return (
         <>
             <Box component="main" sx={{ p: 3 }}>
                 <Toolbar />
-                <Grid container spacing={4} justifyContent="center">
-                    {productData && productData?.map((item, index) => (
+                {!loading && <Grid container spacing={4} justifyContent="center">
+                    {reposList.products.length > 0 && reposList.products?.map((item, index) => (
                         <Grid key={index} item xs={12} sm={6} md={4}>
                             <CustomCard elevation={0}
                                 sx={{
@@ -85,7 +71,7 @@ const ProductOne = () => {
                             </CustomCard>
                         </Grid>
                     ))}
-                </Grid>
+                </Grid>}
             </Box>
         </>
     )

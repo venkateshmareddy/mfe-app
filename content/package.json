@@ -15,7 +15,9 @@
     "email": "jherr@pobox.com"
   },
   "jest": {
-    "setupFilesAfterEnv": ["./setupTests.js"],
+    "setupFilesAfterEnv": [
+      "./setupTests.js"
+    ],
     "testEnvironment": "jsdom"
   },
   "devDependencies": {
@@ -47,6 +49,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.17",
     "@mui/styled-engine-sc": "^6.0.0-alpha.5",
+    "@reduxjs/toolkit": "^2.0.1",
     "axios": "^1.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -46,7 +46,7 @@ module.exports = (_, argv) => ({
       remotes: {},
       exposes: {
         "./Content": "./src/Content.jsx",
-        "./store" :"./src/store.js",
+        "./store" :"./src/redux/store/store.js",
       },
       shared: {
         ...deps,
@@ -67,9 +67,9 @@ module.exports = (_, argv) => ({
           singleton: true,
           requiredVersion: deps["react-redux"],
         },
-        "redux-saga": {
+        "@reduxjs/toolkit": {
           singleton: true,
-          requiredVersion: deps["redux-saga"],
+          requiredVersion: deps["@reduxjs/toolkit"],
         },
       },
       // shared: ['react', 'react-dom', 'redux', 'react-redux', 'redux-saga'],

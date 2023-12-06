@@ -3,25 +3,23 @@ import { Box, Typography, Grid, Container, styled, Icon } from '@mui/material';
 import { Card, CardContent, CardMedia } from '@mui/material';
 import { Button, CardActionArea, CardActions, Toolbar } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  loadUsersDetailsStart,
-} from './redux/actions/usersDetailsActions';
+import { fetchUserDetails } from './redux/slices/userSlice';
+const CustomCard = styled(Card)(({ theme }) => ({
+  margin: 0,
+  padding: 0,
+  borderRadius: '10px',
+  height: '100%',
+  transition: ' transform .5s, boxShadow 1s',
+  '&:hover': {
+    transform: 'scale(1.05) perspective(0px)',
+    color: '#000000',
+  },
+}));
 const Content = () => {
-  const CustomCard = styled(Card)(({ theme }) => ({
-    margin: 0,
-    padding: 0,
-    borderRadius: '10px',
-    height: '100%',
-    transition: ' transform .5s, boxShadow 1s',
-    '&:hover': {
-      transform: 'scale(1.05) perspective(0px)',
-      color: '#000000',
-    },
-  }));
   const dispatch = useDispatch();
-  const userData = useSelector((state) => state.usersDetails.data?.photos);
+  const {loading, reposList  } = useSelector((state) => state.user);
   useEffect(() => {
-    dispatch(loadUsersDetailsStart());
+    dispatch(fetchUserDetails());
   }, [])
   
   return (
@@ -34,8 +32,8 @@ const Content = () => {
         <Typography sx={{ fontSize: '25px' }}>
         HDFC Bank Limited (also known as HDB) is an Indian banking and financial services company headquartered in Mumbai. It is India's largest private sector bank by assets and the world's fifth largest bank by market capitalisation as of August 2023, following its takeover of parent company HDFC.It is the third largest company on Indian stock exchanges with a market capitalisation of $150 billion (as of 6 September 2023).It is also the sixteenth largest employer in India with nearly 1.73lakh employees.
           </Typography>
-        <Grid container spacing={4} justifyContent="center">
-          {userData?.length > 0 && userData?.map((item, index) => (
+        {!loading && <Grid container spacing={4} justifyContent="center">
+          {reposList?.photos.length > 0 && reposList?.photos?.map((item, index) => (
             <Grid key={index} item xs={12} sm={6} md={4}>
               <CustomCard elevation={0}
                 sx={{
@@ -75,7 +73,7 @@ const Content = () => {
               </CustomCard>
             </Grid>
           ))}
-        </Grid>
+        </Grid>}
       </Box>
     </>
   )

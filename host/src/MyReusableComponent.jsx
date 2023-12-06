@@ -2,19 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductsReusbleComponent from './ProductsReusbleComponent';
 import {
-    loadProductDetailsStart,
-} from 'layout/productDetailsActions';
+    fetchProductDetails,
+} from 'layout/productSlice';
 const MyReusableComponent = () => {
     const dispatch = useDispatch();
-    const productData = useSelector((state) => state.productDetails.data?.products);
+    const {loading, reposList} = useSelector((state) => state.product);
     useEffect(() => {
-        dispatch(loadProductDetailsStart());
+        dispatch(fetchProductDetails());
     }, []);
-    console.log('productDataaaaaaa', productData);
 
     return (
         <div>
-            <ProductsReusbleComponent productsData={productData}/>
+            {!loading && <ProductsReusbleComponent productsData={reposList?.products}/>}
         </div>
     );
 };
